@@ -1,0 +1,19 @@
+<div class="pa-4" fxFlex="33">
+  <h3 *ngIf="userId !='add'">User №{{ userId }}</h3>
+  <h3 *ngIf="userId =='add'">Adding user</h3>
+  <div fxFlexAlign="stretch" fxLayout="column">
+    <mat-form-field>
+      <mat-label>Login</mat-label>
+      <input matInput [(ngModel)]="user.login" [disabled]="disableEdit()">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input [(ngModel)]="user.name" matInput [disabled]="disableEdit()">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input [(ngModel)]="user.email" matInput type="email" [disabled]="disableEdit()" >
+    </mat-form-field>
+    <button (click)="save()" mat-flat-button color="primary">Save</button>
+  </div>
+</div>

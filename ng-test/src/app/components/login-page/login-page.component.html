@@ -1,0 +1,17 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+  <mat-card fxFlex="25" >
+    <div fxFlexAlign="stretch" fxLayout="column">
+      <mat-form-field class="example-form-field">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="example@domain.com" #email>
+      </mat-form-field>
+      <mat-form-field class="example-form-field">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput #password>
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="login(email.value, password.value)">LogIn</button>
+    </div>
+
+  </mat-card>
+</div>
+

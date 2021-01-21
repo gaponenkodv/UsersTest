@@ -96,5 +96,40 @@ namespace AppTest.Controllers
                 ? Ok()
                 : NotFound();
         }
+
+        [HttpGet("getAvailableRoles/")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<RoleResponse>>> AddAvailableRoles()
+        {
+            return Ok(await _userQuery.GetAvailableRoles());
+        }
+
+        [HttpGet("addRole/{userId}/{roleId}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<RoleResponse>>> AddRole(int userId, int roleId)
+        {
+            var result = await _userQuery.AddUserRole(userId, roleId);
+
+            return result != null
+                ? Ok(result)
+                : BadRequest();
+        }
+
+        [HttpGet("deleteRole/{userId}/{roleId}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<IEnumerable<RoleResponse>>> DeleteRole(int userId, int roleId)
+        {
+            var result = await _userQuery.DeleteUserRole(userId, roleId);
+
+            return result != null
+                ? Ok(result)
+                : BadRequest();
+        }
     }
 }

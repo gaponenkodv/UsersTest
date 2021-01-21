@@ -74,5 +74,60 @@ namespace AppTest.Queries
             await _db.SaveChangesAsync();
             return true;
         }
+
+        internal async Task<IEnumerable<RoleResponse>> GetAvailableRoles()
+        {
+            return await _db.Roles
+                .Select(t => _mapper.Map<Role, RoleResponse>(t))
+                .ToListAsync();
+        }
+
+        internal async Task<IEnumerable<RoleResponse>> AddUserRole(int userId, int roleId)
+        {
+            var user = await _db.Users
+                .Include(t => t.Roles)
+                .Where(t => t.Id == userId)
+                .FirstOrDefaultAsync();
+
+            if (user == null) return null;
+
+            var role = await _db.Roles
+                .Where(t => t.Id == roleId)
+                .FirstOrDefaultAsync();
+
+            if (role == null) return null;
+
+            if(!user.Roles.Contains(role))
+            {
+                user.Roles.Add(role);
+                _db.SaveChanges();
+                return user.Roles.Select(t => _mapper.Map<Role, RoleResponse>(t));
+            }
+            else
+            {
+                return user.Roles.Select(t => _mapper.Map<Role, RoleResponse>(t));
+            }
+        }
+
+        internal async Task<IEnumerable<RoleResponse>> DeleteUserRole(int userId, int roleId)
+        {
+            var user = await _db.Users
+                .Include(t => t.Roles)
+                .Where(t => t.Id == userId)
+                .FirstOrDefaultAsync();
+
+            if (user == null) return null;
+
+            if (user.Roles.Where(t => t.Id == roleId).FirstOrDefault() != null)
+            {
+                user.Roles.Remove(user.Roles.First(t=>t.Id == roleId));
+                _db.SaveChanges();
+                return user.Roles.Select(t => _mapper.Map<Role, RoleResponse>(t));
+            }
+            else
+            {
+                return user.Roles.Select(t => _mapper.Map<Role, RoleResponse>(t));
+            }
+        }
     }
 }

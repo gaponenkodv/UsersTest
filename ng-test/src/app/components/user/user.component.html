@@ -14,6 +14,14 @@
       <mat-label>Email</mat-label>
       <input [(ngModel)]="user.email" matInput type="email" [disabled]="disableEdit()" >
     </mat-form-field>
+
+    <h2 class="example-h2">User roles</h2>
+
+    <section class="example-section" >
+      <mat-checkbox *ngFor="let role of availableRoles"  class="example-margin" [checked]="isCheckedRole(role)"
+                    (change)="roleChange(user ,role)" [disabled]="disableEdit()">{{ role.name }}</mat-checkbox>
+    </section>
+
     <button (click)="save()" mat-flat-button color="primary">Save</button>
   </div>
 </div>

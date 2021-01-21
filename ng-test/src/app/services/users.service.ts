@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {API_URL} from '../app-injection-tokens';
 import {Observable} from 'rxjs';
 import {User} from '../Models/user';
+import {Role} from "../Models/role";
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,17 @@ export class UsersService {
 
   deleteUser(id: string): Observable<boolean>  {
     return this.http.delete<boolean>(`${this.baseApiUrl}/Users/${id}`);
+  }
+
+  getAvailableRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.baseApiUrl}/Users/getAvailableRoles`);
+  }
+
+  addRole(userId: number, roleId: number): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.baseApiUrl}/Users/addRole/${userId}/${roleId}`);
+  }
+
+  deleteRole(userId: number, roleId: number): Observable<Role[]>{
+    return this.http.get<Role[]>(`${this.baseApiUrl}/Users/deleteRole/${userId}/${roleId}`);
   }
 }

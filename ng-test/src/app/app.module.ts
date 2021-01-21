@@ -26,6 +26,7 @@ import { MatListModule } from '@angular/material/list';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 export function tokenGetter(): string|null {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -50,6 +51,7 @@ export function tokenGetter(): string|null {
     MatInputModule,
     MatButtonModule,
     MatTableModule,
+    MatCheckboxModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
